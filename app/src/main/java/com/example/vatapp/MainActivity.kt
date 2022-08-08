@@ -11,40 +11,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root // reference layout file
-        setContentView(view) // link layout
+        val view = binding.root 
+        setContentView(view) 
 
         binding.btnCalculateVat.setOnClickListener {
             calculateVat()
-        } // End setOnClickListener
+        } 
 
-    } // End onCreate
+    } 
 
     private fun calculateVat() {
         val stringVatet = binding.etTotalCost.text.toString()
         val cost = stringVatet.toDouble()
 
-        // Radio group
-        val selectedID = binding.rgVatOption.checkedRadioButtonId
+        val selectedId = binding.rgVatOption.checkedRadioButtonId
 
-        val vatPercentage = when(selectedID){
+        val vatPercentage = when(selectedId){
             R.id.rb_vat_10 -> 0.10
-            R.id.rb_vat_15 -> 0.10
-            else -> 0.10
-        } // End when
+            R.id.rb_vat_15 -> 0.15
+            else -> 0.20
+        } 
 
         var total = vatPercentage * cost
 
-
         val roundVat = binding.switchRoundUp.isChecked
-
         if (roundVat){
             total = kotlin.math.ceil(total)
         }
 
-        // Total Formatting
         val formatedTotal = NumberFormat.getCurrencyInstance().format(total)
-
         binding.txtCostTotal.text = getString(R.string.total_amount, formatedTotal)
 
     }
